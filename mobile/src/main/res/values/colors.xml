@@ -7,9 +7,17 @@
     <color name="global_color_control_highlight">#667fa5e3</color>
 
 
-    <color name="ab_action_mode_bg">@color/white</color>
+    <color name="ab_action_mode_bg">@color/global_white</color>
 
-    <color name="toolbar_text">@color/white</color>
+    <color name="toolbar_text">@color/global_white</color>
     <color name="toolbar_color_control_highlight">#66ffffff</color>
+
+    <!-- DRAWER COLORS; OVERWRITE THESE COLORS TO CHANGE DRAWER THEME -->
+    <color name="material_drawer_background">@color/global_white</color>
+    <color name="material_drawer_selected">@color/global_white</color>
+    <color name="material_drawer_primary_text">#7e7e7e</color>
+    <color name="material_drawer_selected_text">#99b7e9</color>
+    <color name="material_drawer_header_selection_text">@color/global_white</color>
+    <color name="material_drawer_divider">#e7e7e7</color>
     
 </resources>

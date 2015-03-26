@@ -317,11 +317,11 @@
     <!-- Blue Grey -->
 
     <!-- Black -->
-    <color name="black">#000000</color>
+    <color name="global_black">#000000</color>
     <!-- Black -->
 
     <!-- White -->
-    <color name="white">#FFFFFF</color>
+    <color name="global_white">#FFFFFF</color>
     <!-- White -->
 
 </resources>
