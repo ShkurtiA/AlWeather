@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="global_color_primary">#7fa5e3</color>
+    <color name="global_color_primary_dark">#6684b6</color>
+    <color name="global_color_accent">#4CAF50</color>
+    <color name="global_color_control_highlight">#667fa5e3</color>
+
+
+    <color name="ab_action_mode_bg">@color/white</color>
+
+    <color name="toolbar_text">@color/white</color>
+    <color name="toolbar_color_control_highlight">#66ffffff</color>
+    
+</resources>
