@@ -26,4 +26,16 @@
     </style>
 
 
+    <style name="Theme.AlWeather.Toolbar.Appcompat" parent="Theme.AlWeather">
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+        <item name="android:textColorSecondary">@color/toolbar_text</item>
+        <item name="colorControlHighlight">@color/toolbar_color_control_highlight</item>
+    </style>
+
+
+    <style name="Theme.AlWeather.Toolbar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/global_menu_item_text</item>
+    </style>
+
+
 </resources>

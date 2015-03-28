@@ -21,6 +21,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import al.shkurti.weather.android.R;
+import al.shkurti.weather.android.fragment.TodayFragment;
 import hugo.weaving.DebugLog;
 
 
@@ -38,7 +39,7 @@ public class MainActivity extends ActionBarActivity {
         setupDrawer(savedInstanceState);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_content, new PlaceholderFragment())
+                    .add(R.id.container_content, TodayFragment.newInstance())
                     .commit();
         }
     }
@@ -133,21 +134,4 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        @DebugLog
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
 }

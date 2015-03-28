@@ -6,5 +6,7 @@
 
     <string name="drawer_today">Today</string>
     <string name="drawer_forecast">Forecast</string>
+    
+    <string name="fragment_today_image_description">Weather status</string>
 
 </resources>

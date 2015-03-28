@@ -15,8 +15,8 @@
             android:background="@color/global_color_primary"
             android:elevation="@dimen/toolbar_elevation"
             app:contentInsetStart="@dimen/toolbar_second_keyline"
-            app:theme="@style/Widget.AlWeather.Toolbar.Appcompat"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+            app:theme="@style/Theme.AlWeather.Toolbar.Appcompat"
+            app:popupTheme="@style/Theme.AlWeather.Toolbar.Popup" >
 
         </android.support.v7.widget.Toolbar>
 
