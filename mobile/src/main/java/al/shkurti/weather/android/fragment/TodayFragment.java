@@ -176,6 +176,8 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private void loadData(TodayWeatherModel todayWeatherModel) {
 
+        loadImageUtil.loadBitmapToImageView(mWeatherImage,todayWeatherModel.getWeatherIconUrl().get(0).getValue());
+
         mWeatherConditionText.setText(getTemperature(todayWeatherModel)+" | "+todayWeatherModel.getWeatherDesc().get(0).getValue());
         mHumidityText.setText(todayWeatherModel.getHumidity()+getString(R.string.global_percentage));
         mPrecipitationText.setText(getPrecipitation(todayWeatherModel.getPrecipMM()));

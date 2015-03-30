@@ -37,6 +37,7 @@ import al.shkurti.weather.android.event.AddressEvent;
 import al.shkurti.weather.android.event.LocationEvent;
 import al.shkurti.weather.android.model.TodayWeatherModel;
 import al.shkurti.weather.android.service.FetchAddressIntentService;
+import al.shkurti.weather.android.utility.LoadImageUtil;
 import de.greenrobot.event.EventBus;
 import hugo.weaving.DebugLog;
 
@@ -54,8 +55,8 @@ public class BaseFragment extends Fragment implements
 
     public SharedPreferences mSharedPreferences;
 
-    public String temperatureUnit;
-    public String lengthUnit;
+    public LoadImageUtil loadImageUtil;
+
 
     /**
      * Provides the entry point to Google Play services.
@@ -247,7 +248,7 @@ public class BaseFragment extends Fragment implements
     public void onLocationChanged(Location location) {
         mLastLocation = location; //TODO we have location here :)
         stopLocationUpdates();
-        EventBus.getDefault().post(new LocationEvent(location.getLatitude(),location.getLongitude()));
+        EventBus.getDefault().post(new LocationEvent(location.getLatitude(), location.getLongitude()));
         fetchAddressHandler();
     }
 
@@ -273,6 +274,9 @@ public class BaseFragment extends Fragment implements
 
     protected void onCreateFragment(Bundle savedInstanceState) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if(loadImageUtil == null){
+            loadImageUtil = new LoadImageUtil(getActivity());
+        }
     }
 
 

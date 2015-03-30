@@ -51,6 +51,7 @@ dependencies {
     // communication
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
 
     // view
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
