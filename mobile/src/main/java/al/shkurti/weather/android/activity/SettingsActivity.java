@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import al.shkurti.weather.android.R;
 import al.shkurti.weather.android.fragment.SettingsFragment;
-import al.shkurti.weather.android.utility.FunctionUtility;
 
 /**
  * Created by Armando Shkurti on 2015-03-30.
@@ -20,7 +19,6 @@ public class SettingsActivity  extends ActionBarActivity {
 
         setContentView(R.layout.activity_settings);
         setupActionBar();
-
         setupView(savedInstanceState);
 
     }
@@ -44,11 +42,4 @@ public class SettingsActivity  extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home && !(FunctionUtility.hasJellyBean())) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
