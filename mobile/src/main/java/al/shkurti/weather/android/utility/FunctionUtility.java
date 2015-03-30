@@ -5,12 +5,13 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.view.View;
 
 /**
  * Created by Armando Shkurti on 2015-03-28.
  */
-public class FunctionUitlity {
+public class FunctionUtility {
 
 
     /**
@@ -66,6 +67,11 @@ public class FunctionUitlity {
                         }
                     });
         }
+    }
+
+
+    public static boolean hasJellyBean(){//API 16
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }
 
 

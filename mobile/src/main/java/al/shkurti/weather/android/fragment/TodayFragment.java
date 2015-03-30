@@ -1,6 +1,5 @@
 package al.shkurti.weather.android.fragment;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,7 @@ import al.shkurti.weather.android.client.response.ErrorResponse;
 import al.shkurti.weather.android.event.AddressEvent;
 import al.shkurti.weather.android.event.LocationEvent;
 import al.shkurti.weather.android.model.TodayWeatherModel;
-import al.shkurti.weather.android.utility.FunctionUitlity;
+import al.shkurti.weather.android.utility.FunctionUtility;
 import de.greenrobot.event.EventBus;
 import hugo.weaving.DebugLog;
 
@@ -88,7 +87,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void onResume() {
         super.onResume();
 
-        if(!FunctionUitlity.isNetworkAvailable(getActivity())){
+        if(!FunctionUtility.isNetworkAvailable(getActivity())){
             //TODO show crouton
             return;
         }
@@ -123,7 +122,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     @DebugLog // This method will be called when a TodayWeatherModel event is posted
     public void onEvent(TodayWeatherModel todayWeatherModel) {
         mSwipeRefreshLayout.setRefreshing(false);
-        FunctionUitlity.showHideViews(mContainerLayout,null);
+        FunctionUtility.showHideViews(mContainerLayout, null);
         loadData(todayWeatherModel);
         Toast.makeText(getActivity(), " ok ", Toast.LENGTH_SHORT).show();
     }

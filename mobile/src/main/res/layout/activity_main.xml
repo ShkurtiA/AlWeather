@@ -16,9 +16,7 @@
             android:elevation="@dimen/toolbar_elevation"
             app:contentInsetStart="@dimen/toolbar_second_keyline"
             app:theme="@style/Theme.AlWeather.Toolbar.Appcompat"
-            app:popupTheme="@style/Theme.AlWeather.Toolbar.Popup" >
-
-        </android.support.v7.widget.Toolbar>
+            app:popupTheme="@style/Theme.AlWeather.Toolbar.Popup" />
 
     <FrameLayout
         android:id="@+id/container_content"
