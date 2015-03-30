@@ -1,5 +1,7 @@
 package al.shkurti.weather.android.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -39,8 +41,18 @@ public class MainActivity extends ActionBarActivity {
         setupDrawer(savedInstanceState);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_content, TodayFragment.newInstance())
+                    .add(R.id.container_content, TodayFragment.newInstance(),TodayFragment.TODAY_FRAGMENT_TAG)
                     .commit();
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
+        if(fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
