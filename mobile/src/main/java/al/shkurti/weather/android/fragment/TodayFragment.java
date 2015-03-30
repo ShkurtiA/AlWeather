@@ -55,6 +55,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         super.onCreate(savedInstanceState);
         onCreateTodayFragment(savedInstanceState);
         checkPlayServices();
+        setRetainInstance(true);
     }
 
 
@@ -102,7 +103,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
                     if(!mSwipeRefreshLayout.isRefreshing()) {
                         mSwipeRefreshLayout.setRefreshing(true);
                         getAndCheckLocationSettings();
-                        //requestDataFromServer();
                     }
                 }
             });
@@ -115,7 +115,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     @Override// Is called when user swipes refresh layout
     public void onRefresh() {
         getAndCheckLocationSettings();
-        //requestDataFromServer();
     }
 
 
@@ -137,14 +136,12 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @DebugLog// This method will be called when a LocationEvent event is posted
     public void onEventMainThread(LocationEvent locationEvent) {
-        Log.e("onEventMainThread","locationEvent");
         requestDataFromServer(locationEvent);
     }
 
 
     @DebugLog// This method will be called when a AddressEvent event is posted
     public void onEventMainThread(AddressEvent addressEvent) {
-        Log.e("onEventMainThread","addressEvent");
         mLocationText.setText(addressEvent.getAddress());
     }
 
@@ -180,13 +177,11 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     private void loadData(TodayWeatherModel todayWeatherModel) {
 
         mWeatherConditionText.setText(getTemperature(todayWeatherModel)+" | "+todayWeatherModel.getWeatherDesc().get(0).getValue());
-        mHumidityText.setText(todayWeatherModel.getHumidity()+AlWeatherConfig.PERCENATAGE_UNIT);
+        mHumidityText.setText(todayWeatherModel.getHumidity()+getString(R.string.global_percentage));
         mPrecipitationText.setText(getPrecipitation(todayWeatherModel.getPrecipMM()));
-        mPressureText.setText(todayWeatherModel.getPressure()+AlWeatherConfig.PRESSURE_UNIT_PA);
+        mPressureText.setText(todayWeatherModel.getPressure()+ " " +getString(R.string.global_pressure_unit_pa));
         mWindSpeedText.setText(getWindSpeed(todayWeatherModel));
         mDirectionText.setText(todayWeatherModel.getWinddir16Point());
-
-        //fetchAddressHandler();
 
     }
 

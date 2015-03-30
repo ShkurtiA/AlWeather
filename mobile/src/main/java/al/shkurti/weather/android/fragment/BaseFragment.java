@@ -11,10 +11,9 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -39,6 +38,7 @@ import al.shkurti.weather.android.event.LocationEvent;
 import al.shkurti.weather.android.model.TodayWeatherModel;
 import al.shkurti.weather.android.service.FetchAddressIntentService;
 import de.greenrobot.event.EventBus;
+import hugo.weaving.DebugLog;
 
 /**
  * Created by Armando Shkurti on 2015-03-29.
@@ -245,10 +245,9 @@ public class BaseFragment extends Fragment implements
      */
     @Override
     public void onLocationChanged(Location location) {
-        Toast.makeText(getActivity(),"location",Toast.LENGTH_SHORT).show();
         mLastLocation = location; //TODO we have location here :)
         stopLocationUpdates();
-        EventBus.getDefault().postSticky(new LocationEvent(location.getLatitude(),location.getLongitude()));
+        EventBus.getDefault().post(new LocationEvent(location.getLatitude(),location.getLongitude()));
         fetchAddressHandler();
     }
 
@@ -273,7 +272,7 @@ public class BaseFragment extends Fragment implements
 
 
     protected void onCreateFragment(Bundle savedInstanceState) {
-        mSharedPreferences = getActivity().getSharedPreferences(AlWeatherConfig.SHARED_PREF_NAME,AlWeatherConfig.MODE_PRIVATE);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
 
@@ -391,21 +390,23 @@ public class BaseFragment extends Fragment implements
     }
 
 
+    @DebugLog
     protected String getPrecipitation(String precipMM) {
-        String speedWithUnit = mSharedPreferences.getString(AlWeatherConfig.LENGTH_KEY, AlWeatherConfig.LENGTH_UNIT_M);
-        if(!speedWithUnit.contains(AlWeatherConfig.LENGTH_UNIT_M)){
-            speedWithUnit = precipMM + speedWithUnit;
+        String speedWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_length), getString(R.string.global_length_unit_m));
+        if(speedWithUnit.contains(getString(R.string.global_length_unit_m))){
+            speedWithUnit = precipMM + " " + speedWithUnit;
         }else{
             DecimalFormat df = new DecimalFormat();
             df.setMaximumFractionDigits(1);
-            speedWithUnit = df.format(Double.parseDouble(precipMM)/AlWeatherConfig.INCH_TO_MILLIMETER) + speedWithUnit;
+            speedWithUnit = df.format(Double.parseDouble(precipMM)/AlWeatherConfig.INCH_TO_MILLIMETER) + " " + speedWithUnit;
         }
         return speedWithUnit;
     }
 
+
     protected String getTemperature(TodayWeatherModel todayWeatherModel) {
-        String tempWithUnit = mSharedPreferences.getString(AlWeatherConfig.TEMPERATURE_KEY, AlWeatherConfig.TEMPERATURE_UNIT_C);
-        if(tempWithUnit.contains(AlWeatherConfig.TEMPERATURE_UNIT_C)){
+        String tempWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_temp), getString(R.string.global_temperature_unit_c));
+        if(tempWithUnit.contains(getString(R.string.global_temperature_unit_c))){
             tempWithUnit = todayWeatherModel.getTemp_C() + tempWithUnit;
         }else{
             tempWithUnit = todayWeatherModel.getTemp_F() + tempWithUnit;
@@ -413,12 +414,14 @@ public class BaseFragment extends Fragment implements
         return tempWithUnit;
     }
 
+
+    @DebugLog
     protected String getWindSpeed(TodayWeatherModel todayWeatherModel){
-        String speedWithUnit = mSharedPreferences.getString(AlWeatherConfig.LENGTH_KEY, AlWeatherConfig.LENGTH_UNIT_M);
-        if(speedWithUnit.contains(AlWeatherConfig.LENGTH_UNIT_M)){
-            speedWithUnit = todayWeatherModel.getWindspeedKmph() + AlWeatherConfig.SPEED_UNIT_KPH;
+        String speedWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_length), getString(R.string.global_length_unit_m));
+        if(speedWithUnit.contains(getString(R.string.global_length_unit_m))){
+            speedWithUnit = todayWeatherModel.getWindspeedKmph() + " " + getString(R.string.global_speed_unit_kph);
         }else{
-            speedWithUnit = todayWeatherModel.getWindspeedMiles() + AlWeatherConfig.SPEED_UNIT_MPH;
+            speedWithUnit = todayWeatherModel.getWindspeedMiles() + " " + getString(R.string.global_speed_unit_mph);
         }
         return speedWithUnit;
     }

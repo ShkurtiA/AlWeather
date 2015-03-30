@@ -15,6 +15,7 @@
     <dimen name="fragment_today_divider_height">1dp</dimen>
     <dimen name="fragment_today_divider_width">100dp</dimen>
 
+        <dimen name="global_spacing_xxxs">4dp</dimen>
        <dimen name="global_spacing_xxs">8dp</dimen>
     <dimen name="global_spacing_xs">16dp</dimen>
        <dimen name="global_spacing_s">24dp</dimen>
@@ -26,7 +27,7 @@
     <dimen name="global_text_size_display_4">112sp</dimen>
     <dimen name="global_text_size_display_3">56sp</dimen>
     <dimen name="global_text_size_display_2">45sp</dimen>
-    <dimen name="global_text_size_display_1">34sp</dimen>
+        <dimen name="global_text_size_display_1">34sp</dimen>
         <dimen name="global_text_size_headline">24sp</dimen>
         <dimen name="global_text_size_title">20sp</dimen>
         <dimen name="global_text_size_subhead">16sp</dimen>

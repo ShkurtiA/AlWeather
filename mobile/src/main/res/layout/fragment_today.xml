@@ -48,7 +48,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_today_location"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/global_spacing_xxs"
                     android:textColor="@color/fragment_today_text_temp"
                     android:textSize="@dimen/global_text_size_display_1"
                     app_font:typeface="roboto_medium"
@@ -58,12 +57,12 @@
                     android:id="@+id/fragment_today_divider"
                     android:layout_width="@dimen/fragment_today_divider_width"
                     android:layout_height="@dimen/fragment_today_divider_height"
-                    android:layout_centerInParent="true"
+                    android:layout_below="@id/fragment_today_weather_condition"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/global_spacing_m"
                     android:background="@color/fragment_today_divider" />
 
-                <!-- This is the part where the designer didn't follow the
-                guidelines :) to make icons at least with the same height in pixel,
-                so a workaround is needed, thanks Roman Guy -->
+                <!-- Trick when icons don't have the same height, thanks Roman Guy :)-->
                 <LinearLayout
                     android:id="@+id/fragment_today_info_container1"
                     android:layout_width="match_parent"
@@ -77,7 +76,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="@dimen/global_spacing_xxs"
+                        android:drawablePadding="@dimen/global_spacing_xxxs"
                         android:drawableTop="@drawable/ic_weather_humidity"
                         android:gravity="center"
                         android:textColor="@color/global_text_info"
@@ -90,7 +89,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="@dimen/global_spacing_xxs"
+                        android:drawablePadding="@dimen/global_spacing_xxxs"
                         android:drawableTop="@drawable/ic_weather_precipitation"
                         android:gravity="center"
                         android:textColor="@color/global_text_info"
@@ -103,7 +102,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="@dimen/global_spacing_xxs"
+                        android:drawablePadding="@dimen/global_spacing_xxxs"
                         android:drawableTop="@drawable/ic_weather_pressure"
                         android:gravity="center"
                         android:textColor="@color/global_text_info"
@@ -118,6 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/fragment_today_info_container1"
+                    android:layout_marginBottom="@dimen/global_spacing_xs"
                     android:layout_marginTop="@dimen/global_spacing_m"
                     android:orientation="horizontal">
 
@@ -126,7 +126,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="@dimen/global_spacing_xxs"
+                        android:drawablePadding="@dimen/global_spacing_xxxs"
                         android:drawableTop="@drawable/ic_weather_wind_speed"
                         android:gravity="center"
                         android:textColor="@color/global_text_info"
@@ -139,7 +139,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:drawablePadding="@dimen/global_spacing_xxs"
+                        android:drawablePadding="@dimen/global_spacing_xxxs"
                         android:drawableTop="@drawable/ic_weather_direction"
                         android:gravity="center"
                         android:textColor="@color/global_text_info"

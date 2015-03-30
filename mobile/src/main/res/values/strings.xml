@@ -19,5 +19,14 @@
     <string name="preference_key_unit_temp">preference_unit_temp</string>
     <string name="preference_key_unit_length">preference_unit_length</string>
 
+    <string name="global_temperature_unit_c">°C</string>
+    <string name="global_temperature_unit_f">°F</string>
+    <string name="global_speed_unit_kph"> km/h</string>
+    <string name="global_speed_unit_mph"> miles/h</string>
+    <string name="global_length_unit_m"> mm</string>
+    <string name="global_length_unit_in"> in</string>
+    <string name="global_pressure_unit_pa"> hPa</string>
+    <string name="global_percentage">%</string>
+
 
 </resources>
