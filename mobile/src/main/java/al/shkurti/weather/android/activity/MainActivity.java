@@ -53,12 +53,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
+    @Override // we need to get this result when we are at fragments and is open dialog for turning on GPS
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
-        if(fragment != null) {
-            fragment.onActivityResult(requestCode, resultCode, data);
+        Fragment fragmentT = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
+        if(fragmentT != null) {
+            fragmentT.onActivityResult(requestCode, resultCode, data);
+        }
+
+        Fragment fragmentF = getSupportFragmentManager().findFragmentByTag(ForecastFragment.FORECAST_FRAGMENT_TAG);
+        if(fragmentF != null) {
+            fragmentF.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -107,7 +112,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @DebugLog
+    @DebugLog// if fragment is opened dont do anything
     private void openTodayFragment() {
         toolbar.setTitle(getString(R.string.drawer_today));
 
@@ -189,7 +194,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     /**
-     * Show Fragment, if its visible dont do anything TODO
+     * @param fragment Fragment that we want to show
      * */
     private void showFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

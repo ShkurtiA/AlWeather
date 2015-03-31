@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import al.shkurti.weather.android.AlWeatherConfig;
 import al.shkurti.weather.android.R;
@@ -71,10 +70,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         View rootView = inflater.inflate(R.layout.fragment_today,container,false);
         setupSwipeRefreshLayout(rootView);
         renderView(rootView);
-        /*Crouton.makeText(getActivity(),
-                getString(R.string.error_no_connection_available),
-                Style.ALERT,
-                container).show();*/
         return rootView;
     }
 
@@ -153,7 +148,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         mSwipeRefreshLayout.setRefreshing(false);
         FunctionUtility.showHideViews(mContainerLayout, mErrorLayout);
         loadData(todayWeatherModel);
-        Toast.makeText(getActivity(), " ok ", Toast.LENGTH_SHORT).show();
     }
 
 

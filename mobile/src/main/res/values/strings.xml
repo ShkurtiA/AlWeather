@@ -33,6 +33,7 @@
     <string name="error_view_retry">RETRY</string>
     <string name="error_view_no_data">"He's Dead, Jim!"</string>
     <string name="error_no_connection_available">Data network unavailable</string>
+    <string name="error_no_location_available">Location service unavailable</string>
 
 
 </resources>

@@ -8,7 +8,9 @@
     android:id="@+id/error_view_container"
     android:orientation="vertical"
     android:background="@color/error_view_bg"
-    android:visibility="gone">
+    android:paddingTop="@dimen/global_spacing_m"
+    android:paddingBottom="@dimen/global_spacing_m"
+    android:visibility="visible">
 
     <ImageView
         android:id="@+id/error_image"

@@ -32,6 +32,7 @@ import java.text.DecimalFormat;
 
 import al.shkurti.weather.android.AlWeatherConfig;
 import al.shkurti.weather.android.R;
+import al.shkurti.weather.android.client.response.ErrorResponse;
 import al.shkurti.weather.android.event.AddressEvent;
 import al.shkurti.weather.android.event.LocationEvent;
 import al.shkurti.weather.android.model.TodayWeatherModel;
@@ -163,7 +164,6 @@ public class BaseFragment extends Fragment implements
     public void onConnectionFailed(ConnectionResult result) {
         // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
         // onConnectionFailed.
-        //Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
     }
 
 
@@ -171,7 +171,6 @@ public class BaseFragment extends Fragment implements
     public void onConnectionSuspended(int cause) {
         // The connection to Google Play services was lost for some reason. We call connect() to
         // attempt to re-establish the connection.
-        //Log.i(TAG, "Connection suspended");
         mGoogleApiClient.connect();
     }
 
@@ -201,22 +200,18 @@ public class BaseFragment extends Fragment implements
         final Status status = locationSettingsResult.getStatus();
         switch (status.getStatusCode()) {
             case LocationSettingsStatusCodes.SUCCESS:
-                //Log.i(TAG, "All location settings are satisfied.");
                 startLocationUpdates();
                 break;
             case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                //Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings ");
-
                 try {
                     // Show the dialog by calling startResolutionForResult(), and check the result
                     // in onActivityResult().
                     status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException e) {
-                    //Log.i("mm", "PendingIntent unable to execute request.");
                 }
                 break;
             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                //Log.i(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog " +"not created.");
+                EventBus.getDefault().postSticky(new ErrorResponse(getString(R.string.error_no_location_available)));
                 break;
         }
     }
@@ -229,11 +224,10 @@ public class BaseFragment extends Fragment implements
             case REQUEST_CHECK_SETTINGS:
                 switch (resultCode) {
                     case Activity.RESULT_OK:
-                        //Log.i(TAG, "User agreed to make required location settings changes.");
                         startLocationUpdates();
                         break;
                     case Activity.RESULT_CANCELED:
-                        //Log.i(TAG, "User chose not to make required location settings changes.");
+                        EventBus.getDefault().postSticky(new ErrorResponse(getString(R.string.error_no_location_available)));
                         break;
                 }
                 break;
@@ -254,6 +248,9 @@ public class BaseFragment extends Fragment implements
     }
 
 
+    /**
+     * Is called from TodayFragment onCreate method
+     * */
     protected void onCreateTodayFragment(Bundle savedInstanceState) {
 
         onCreateFragment(savedInstanceState);
@@ -272,6 +269,9 @@ public class BaseFragment extends Fragment implements
 
     }
 
+    /**
+     * Is called from ForecastFragment onCreate method
+     * */
     protected void onCreateForecastFragment(Bundle savedInstanceState) {
 
         onCreateFragment(savedInstanceState);
@@ -413,6 +413,9 @@ public class BaseFragment extends Fragment implements
 
 
     @DebugLog
+    /**
+     * Get precipitation based on user preferences
+     * */
     protected String getPrecipitation(String precipMM) {
         String speedWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_length), getString(R.string.global_length_unit_m));
         if(speedWithUnit.contains(getString(R.string.global_length_unit_m))){
@@ -425,7 +428,9 @@ public class BaseFragment extends Fragment implements
         return speedWithUnit;
     }
 
-
+    /**
+     * Get temperature based on user preferences
+     * */
     protected String getTemperature(TodayWeatherModel todayWeatherModel) {
         String tempWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_temp), getString(R.string.global_temperature_unit_c));
         if(tempWithUnit.contains(getString(R.string.global_temperature_unit_c))){
@@ -438,6 +443,9 @@ public class BaseFragment extends Fragment implements
 
 
     @DebugLog
+    /**
+     * Get wind speed based on user preferences
+     * */
     protected String getWindSpeed(TodayWeatherModel todayWeatherModel){
         String speedWithUnit = mSharedPreferences.getString(getString(R.string.preference_key_unit_length), getString(R.string.global_length_unit_m));
         if(speedWithUnit.contains(getString(R.string.global_length_unit_m))){

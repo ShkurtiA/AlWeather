@@ -123,9 +123,9 @@ public class ForecastFragment extends BaseFragment implements SwipeRefreshLayout
     @DebugLog
     @Override// Is called when user swipes refresh layout
     public void onRefresh() {
-        if(latLongLocation.length()==0){
+        if(latLongLocation.length()==0){// we dont have location
             getAndCheckLocationSettings();
-        }else {
+        }else { // we have location
             requestDataFromServer(latLongLocation);
         }
     }
