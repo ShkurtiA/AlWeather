@@ -10,7 +10,7 @@
     android:background="@color/error_view_bg"
     android:paddingTop="@dimen/global_spacing_m"
     android:paddingBottom="@dimen/global_spacing_m"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <ImageView
         android:id="@+id/error_image"

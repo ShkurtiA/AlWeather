@@ -1,6 +1,7 @@
 package al.shkurti.weather.android.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -96,25 +97,26 @@ public class ForecastFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
         if(latLongLocation.length()==0 && !mSwipeRefreshLayout.isRefreshing() && mArrayList.size() == 0){// if we didnt receive a location than we should wait till we get one
-            mSwipeRefreshLayout.post(new Runnable() {
-                @Override public void run() {
-
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     if(!mSwipeRefreshLayout.isRefreshing()) {
                         mSwipeRefreshLayout.setRefreshing(true);
                         getAndCheckLocationSettings();
                     }
                 }
-            });
+            },600);
 
         }else if(!mSwipeRefreshLayout.isRefreshing() && mArrayList.size() == 0 ){ //If mSwipeRefreshLayout is not refreshing than we should call the API to receive data
-            mSwipeRefreshLayout.post(new Runnable() {
-                @Override public void run() {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     if(!mSwipeRefreshLayout.isRefreshing()) {
                         mSwipeRefreshLayout.setRefreshing(true);
                         requestDataFromServer(latLongLocation);
                     }
                 }
-            });
+            },600);
         }
 
     }

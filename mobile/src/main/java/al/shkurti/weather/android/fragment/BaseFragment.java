@@ -400,15 +400,17 @@ public class BaseFragment extends Fragment implements
         // It is a good practice to remove location requests (I know ) when the activity is in a paused or
         // stopped state. Doing so helps battery performance and is especially
         // recommended in applications that request frequent location updates.
-        LocationServices.FusedLocationApi.removeLocationUpdates(
-                mGoogleApiClient,
-                this
-        ).setResultCallback(new ResultCallback<Status>() {
-            @Override
-            public void onResult(Status status) {
-                //mRequestingLocationUpdates = false;
-            }
-        });
+        if(mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(
+                    mGoogleApiClient,
+                    this
+            ).setResultCallback(new ResultCallback<Status>() {
+                @Override
+                public void onResult(Status status) {
+                    //mRequestingLocationUpdates = false;
+                }
+            });
+        }
     }
 
 

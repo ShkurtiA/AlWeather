@@ -1,6 +1,7 @@
 package al.shkurti.weather.android.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -34,7 +35,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     public static String TODAY_FRAGMENT_TAG = "TODAY_FRAGMENT_TAG";
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    public SwipeRefreshLayout mSwipeRefreshLayout;
     private RelativeLayout mContainerLayout;
     private LinearLayout mErrorLayout;
     private ImageView mWeatherImage;
@@ -106,15 +107,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
          * If mContainerLayout is invisible and mSwipeRefreshLayout is not refreshing than we should call the API to receive data
          * */
         if(mContainerLayout.getVisibility() == View.GONE && !mSwipeRefreshLayout.isRefreshing()){
-            mSwipeRefreshLayout.post(new Runnable() {
-                @Override public void run() {
-
-                    if(!mSwipeRefreshLayout.isRefreshing()) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                        getAndCheckLocationSettings();
-                    }
-                }
-            });
+            setRefreshingSwipeLayoutHandler();
         }
     }
 
@@ -130,14 +123,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void onClick(View view) {
         if(view.getId() == R.id.error_retry){
             if(mContainerLayout.getVisibility() == View.GONE && !mSwipeRefreshLayout.isRefreshing()){
-                mSwipeRefreshLayout.post(new Runnable() {
-                    @Override public void run() {
-                        if(!mSwipeRefreshLayout.isRefreshing()) {
-                            mSwipeRefreshLayout.setRefreshing(true);
-                            getAndCheckLocationSettings();
-                        }
-                    }
-                });
+                setRefreshingSwipeLayout();
             }
         }
     }
@@ -190,8 +176,32 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.fragment_today_swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.global_color_primary);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        ((MainActivity)getActivity()).setFragmentSwipeRefreshToActivity(mSwipeRefreshLayout);
     }
 
+
+    /**
+     * Workaround to set refreshing true, until we have an android.support that supports this :)
+     *
+     * */
+    private void setRefreshingSwipeLayoutHandler() {
+        Handler m = new Handler();
+        m.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefreshingSwipeLayout();
+            }
+        },600);
+
+    }
+
+
+    private void setRefreshingSwipeLayout(){
+        if(!mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(true);
+            getAndCheckLocationSettings();
+        }
+    }
 
     private void renderView(View rootView) {
         mContainerLayout = (RelativeLayout) rootView.findViewById(R.id.fragment_today_container);

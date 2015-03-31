@@ -27,7 +27,7 @@ public class APICall {
      * */
     public void getWeatherForToday(String latLong, String apiKey){
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                //.setLogLevel(RestAdapter.LogLevel.BASIC) // only for debug
                 .setEndpoint(AlWeatherConfig.API_URL)
                 .build();
 
@@ -42,7 +42,7 @@ public class APICall {
                         todayWeatherResponse.getData().getCurrent_condition().size() >0 &&
                         todayWeatherResponse.getData().getCurrent_condition().get(0) != null){
                     EventBus.getDefault().postSticky(todayWeatherResponse.getData().getCurrent_condition().get(0));
-                }else{
+                }else{// manage error
                     String error="";
                     if(todayWeatherResponse.getData() != null &&
                             todayWeatherResponse.getData().getError() !=null &&
@@ -77,7 +77,7 @@ public class APICall {
      * */
     public void getWeatherForecast(String latLong, String apiKey , String numbOfDays){
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                //.setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setEndpoint(AlWeatherConfig.API_URL)
                 .build();
 
@@ -92,7 +92,7 @@ public class APICall {
                 if(forecastWeatherResponse.getData() != null &&
                         forecastWeatherResponse.getData().getWeather().size()  == AlWeatherConfig.WEATHER_FORECAST_DAYS ){
                     EventBus.getDefault().postSticky(forecastWeatherResponse.getData().getWeather());
-                }else{
+                }else{// manage error
                     String error="";
                     if(forecastWeatherResponse.getData() != null &&
                             forecastWeatherResponse.getData().getError() !=null &&

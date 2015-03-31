@@ -3,6 +3,7 @@ package al.shkurti.weather.android.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class MainActivity extends ActionBarActivity {
     private AccountHeader.Result mDrawerHeader;
     private Drawer.Result mDrawer;
     private Toolbar toolbar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
 
     @Override
@@ -47,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         setupDrawer(savedInstanceState);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_content, TodayFragment.newInstance(),TodayFragment.TODAY_FRAGMENT_TAG)
+                    .replace(R.id.container_content, TodayFragment.newInstance(), TodayFragment.TODAY_FRAGMENT_TAG)
                     .commit();
         }
     }
@@ -99,6 +101,36 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //add the values which need to be saved from the drawer to the bundle
+        outState = mDrawer.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //handle the back press, close the drawer first and if the drawer is closed close the activity
+        if (mDrawer != null && mDrawer.isDrawerOpen()) {
+            mDrawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    public void setFragmentSwipeRefreshToActivity(SwipeRefreshLayout mSwipeRefreshLayout){
+        this.mSwipeRefreshLayout = mSwipeRefreshLayout;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
+    }
+
+
     @DebugLog
     private void selectDrawerItem(int identifier) {
         switch (identifier){
@@ -121,7 +153,7 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
         Fragment mFragment = TodayFragment.newInstance();
-        showFragment(mFragment);
+        showFragment(mFragment,TodayFragment.TODAY_FRAGMENT_TAG);
 
     }
 
@@ -135,20 +167,26 @@ public class MainActivity extends ActionBarActivity {
             return;
         }
         Fragment mFragment = ForecastFragment.newInstance(latLongLocation);
-        showFragment(mFragment);
+        showFragment(mFragment,ForecastFragment.FORECAST_FRAGMENT_TAG);
     }
 
-
-    @Override
-    protected void onDestroy() {
-        Crouton.cancelAllCroutons();
-        super.onDestroy();
-    }
 
     private void setupActionBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.drawer_today));
         setSupportActionBar(toolbar);
+
+        // check if a fragment is shown that put his title, if no one is show put the default
+        Fragment todayFragment = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
+        if(todayFragment != null) {
+            toolbar.setTitle(getString(R.string.drawer_today));
+            return;
+        }
+        Fragment forecastFragment = getSupportFragmentManager().findFragmentByTag(ForecastFragment.FORECAST_FRAGMENT_TAG);
+        if(forecastFragment != null) {
+            toolbar.setTitle(getString(R.string.drawer_forecast));
+            return;
+        }
+        toolbar.setTitle(getString(R.string.drawer_today));
     }
 
 
@@ -196,12 +234,19 @@ public class MainActivity extends ActionBarActivity {
     /**
      * @param fragment Fragment that we want to show
      * */
-    private void showFragment(Fragment fragment) {
+    private void showFragment(Fragment fragment, String TAG) {
+        // because of a bug of swipe refreshlayout, that when fragment swipelayout is
+        // refreshing you cant call a commit fragment from Main UI Thread because the swipe
+        // wont let it appear, this is a workaround to fix this bug
+        if(mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.container_content, fragment);
+        transaction.replace(R.id.container_content, fragment,TAG);
         // Commit the transaction
         transaction.commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 
 }
