@@ -1,4 +1,4 @@
-package al.shkurti.weather.android.utility;
+package al.shkurti.weather.android.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

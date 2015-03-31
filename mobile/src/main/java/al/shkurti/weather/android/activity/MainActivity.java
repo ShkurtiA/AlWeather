@@ -1,19 +1,18 @@
 package al.shkurti.weather.android.activity;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
@@ -23,15 +22,22 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import al.shkurti.weather.android.R;
+import al.shkurti.weather.android.event.LocationEvent;
+import al.shkurti.weather.android.fragment.ForecastFragment;
 import al.shkurti.weather.android.fragment.TodayFragment;
+import de.greenrobot.event.EventBus;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import hugo.weaving.DebugLog;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    public String latLongLocation="";
+
     private AccountHeader.Result mDrawerHeader;
     private Drawer.Result mDrawer;
     private Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,15 +81,68 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.menu_settings) {
             startActivity(new Intent(this,SettingsActivity.class));
             return true;
+        }else if (id == R.id.menu_about) {
+            new MaterialDialog.Builder(this)
+                    .title(R.string.menu_about)
+                    .content(R.string.dialog_about_content)
+                    .positiveText(android.R.string.ok)
+                    .show();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
 
+    @DebugLog
+    private void selectDrawerItem(int identifier) {
+        switch (identifier){
+            case 1:
+                openTodayFragment();
+                break;
+            case 2:
+                openForecastFragment();
+                break;
+        }
+    }
+
+
+    @DebugLog
+    private void openTodayFragment() {
+        toolbar.setTitle(getString(R.string.drawer_today));
+
+        Fragment containerFragment = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
+        if(containerFragment != null) { // this means that fragment is already in container
+            return;
+        }
+        Fragment mFragment = TodayFragment.newInstance();
+        showFragment(mFragment);
+
+    }
+
+
+    @DebugLog
+    private void openForecastFragment() {
+        toolbar.setTitle(getString(R.string.drawer_forecast));
+
+        Fragment containerFragment = getSupportFragmentManager().findFragmentByTag(ForecastFragment.FORECAST_FRAGMENT_TAG);
+        if(containerFragment != null) { // this means that fragment is already in container, dont show
+            return;
+        }
+        Fragment mFragment = ForecastFragment.newInstance(latLongLocation);
+        showFragment(mFragment);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        Crouton.cancelAllCroutons();
+        super.onDestroy();
+    }
+
     private void setupActionBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("MAndi");
+        toolbar.setTitle(getString(R.string.drawer_today));
         setSupportActionBar(toolbar);
     }
 
@@ -129,21 +188,15 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    private void selectDrawerItem(int identifier) {
-        switch (identifier){
-            case 1:
-                break;
-            case 2:
-                break;
-        }
-    }
-
-
     /**
      * Show Fragment, if its visible dont do anything TODO
      * */
-    private void showFragment(){
-
+    private void showFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.container_content, fragment);
+        // Commit the transaction
+        transaction.commit();
     }
 
 }

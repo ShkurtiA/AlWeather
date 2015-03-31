@@ -18,20 +18,9 @@ public class AlWeatherConfig {
      * */
     public static final String API_URL = "http://api.worldweatheronline.com/free/v2";
 
-    /*public static final String SHARED_PREF_NAME = "AlWeather";
-    public static final int MODE_PRIVATE = 0;
-    public static final String TEMPERATURE_KEY = "temp";
-    public static final String LENGTH_KEY = "length";*/
+    public static final String LOCATION_LAT_LONG_KEY = "AlWeatherLoc";
 
     public static final int WEATHER_FORECAST_DAYS = 5;
-    /*public static final String TEMPERATURE_UNIT_C = "°C";
-    public static final String TEMPERATURE_UNIT_F = "°F";
-    public static final String SPEED_UNIT_KPH = " km/h";
-    public static final String SPEED_UNIT_MPH = " miles/h";
-    public static final String LENGTH_UNIT_M = " mm"; // millimeters
-    public static final String LENGTH_UNIT_IN = " in"; // inch
-    public static final String PRESSURE_UNIT_PA = " hPa"; // hectopascal
-    public static final String PERCENATAGE_UNIT = "%";*/
 
     public static final double INCH_TO_MILLIMETER = 25.4;
 

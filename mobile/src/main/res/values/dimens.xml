@@ -12,12 +12,14 @@
 
     <dimen name="ab_action_button">20dp</dimen>
 
-    <dimen name="fragment_today_divider_height">1dp</dimen>
+    <dimen name="global_divider_height">1dp</dimen>
     <dimen name="fragment_today_divider_width">100dp</dimen>
 
-        <dimen name="global_spacing_xxxs">4dp</dimen>
+       <dimen name="global_spacing_xxxs">4dp</dimen>
        <dimen name="global_spacing_xxs">8dp</dimen>
-    <dimen name="global_spacing_xs">16dp</dimen>
+        <dimen name="global_spacing_xs_1">12dp</dimen>
+    <dimen name="global_spacing_xs_0">10dp</dimen>
+       <dimen name="global_spacing_xs">16dp</dimen>
        <dimen name="global_spacing_s">24dp</dimen>
        <dimen name="global_spacing_m">32dp</dimen>
     <dimen name="global_spacing_l">48dp</dimen>
@@ -34,5 +36,6 @@
     <dimen name="global_text_size_body_2">14sp</dimen>
     <dimen name="global_text_size_body_1">14sp</dimen>
     <dimen name="global_text_size_caption">12sp</dimen>
+
 
 </resources>

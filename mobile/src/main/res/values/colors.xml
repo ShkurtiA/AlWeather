@@ -23,6 +23,13 @@
     
     <color name="global_text_info">#404040</color>
     <color name="fragment_today_text_temp">#333333</color>
-    <color name="fragment_today_divider">#dedede</color>
+    <color name="global_divider">#dedede</color>
+
+    <color name="error_view_text">#656565</color>
+    <color name="error_view_bg">#eeeeee</color>
+    <color name="error_view_text_dark">#CC000000</color>
+    <color name="error_view_text_light">#858585</color>
+    <color name="error_view_retry_button_background">#30000000</color>
+    <color name="error_view_retry_button_background_stroke">#50000000</color>
     
 </resources>

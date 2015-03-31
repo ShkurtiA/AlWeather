@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -107,7 +106,7 @@ public class BaseFragment extends Fragment implements
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
      */
-    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 1000;
+    public static final long UPDATE_INTERVAL_IN_MILLISECONDS = 2500;
 
     /**
      * The fastest rate for active location updates. Exact. Updates will never be more frequent
@@ -120,14 +119,15 @@ public class BaseFragment extends Fragment implements
     @Override
     public void onStart() {
         super.onStart();
-        mGoogleApiClient.connect();
+        if(mGoogleApiClient!=null)
+            mGoogleApiClient.connect();
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient!= null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
     }
@@ -212,7 +212,7 @@ public class BaseFragment extends Fragment implements
                     // in onActivityResult().
                     status.startResolutionForResult(getActivity(), REQUEST_CHECK_SETTINGS);
                 } catch (IntentSender.SendIntentException e) {
-                    Log.i("mm", "PendingIntent unable to execute request.");
+                    //Log.i("mm", "PendingIntent unable to execute request.");
                 }
                 break;
             case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
@@ -224,7 +224,6 @@ public class BaseFragment extends Fragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             // Check for the integer request code originally supplied to startResolutionForResult().
             case REQUEST_CHECK_SETTINGS:
@@ -248,8 +247,10 @@ public class BaseFragment extends Fragment implements
     public void onLocationChanged(Location location) {
         mLastLocation = location; //TODO we have location here :)
         stopLocationUpdates();
-        EventBus.getDefault().post(new LocationEvent(location.getLatitude(), location.getLongitude()));
-        fetchAddressHandler();
+        EventBus.getDefault().postSticky(new LocationEvent(location.getLatitude(), location.getLongitude()));// post event to subscribers
+
+        if(mResultReceiver!=null)// control if we want to receive this data or not
+            fetchAddressHandler();
     }
 
 
@@ -257,6 +258,23 @@ public class BaseFragment extends Fragment implements
 
         onCreateFragment(savedInstanceState);
         mResultReceiver = new AddressResultReceiver(new Handler());
+
+        // Set defaults, then update using values stored in the Bundle.
+        mAddressRequested = false;
+        mAddressOutput = "";
+        updateValuesFromBundle(savedInstanceState);
+
+        // Kick off the process of building the GoogleApiClient, LocationRequest, and
+        // LocationSettingsRequest objects.
+        buildGoogleApiClient();
+        createLocationRequest();
+        buildLocationSettingsRequest();
+
+    }
+
+    protected void onCreateForecastFragment(Bundle savedInstanceState) {
+
+        onCreateFragment(savedInstanceState);
 
         // Set defaults, then update using values stored in the Bundle.
         mAddressRequested = false;

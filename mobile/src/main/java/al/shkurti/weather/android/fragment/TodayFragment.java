@@ -4,35 +4,40 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import al.shkurti.weather.android.AlWeatherConfig;
 import al.shkurti.weather.android.R;
+import al.shkurti.weather.android.activity.MainActivity;
 import al.shkurti.weather.android.client.APICall;
 import al.shkurti.weather.android.client.response.ErrorResponse;
 import al.shkurti.weather.android.event.AddressEvent;
 import al.shkurti.weather.android.event.LocationEvent;
+import al.shkurti.weather.android.event.NetworkChange;
 import al.shkurti.weather.android.model.TodayWeatherModel;
 import al.shkurti.weather.android.utility.FunctionUtility;
 import de.greenrobot.event.EventBus;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import hugo.weaving.DebugLog;
 
 /**
  * Created by Armando Shkurti on 2015-03-26.
  */
-public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener{
 
     public static String TODAY_FRAGMENT_TAG = "TODAY_FRAGMENT_TAG";
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RelativeLayout mContainerLayout;
+    private LinearLayout mErrorLayout;
     private ImageView mWeatherImage;
     private TextView mLocationText;
     private TextView mWeatherConditionText;
@@ -41,6 +46,8 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     private TextView mPressureText;
     private TextView mWindSpeedText;
     private TextView mDirectionText;
+    private TextView mErrorRetry;
+    private TextView mErrorSubtitle;
     private APICall mApiCall;
 
 
@@ -64,7 +71,10 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         View rootView = inflater.inflate(R.layout.fragment_today,container,false);
         setupSwipeRefreshLayout(rootView);
         renderView(rootView);
-
+        /*Crouton.makeText(getActivity(),
+                getString(R.string.error_no_connection_available),
+                Style.ALERT,
+                container).show();*/
         return rootView;
     }
 
@@ -89,14 +99,18 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         super.onResume();
 
         if(!FunctionUtility.isNetworkAvailable(getActivity())){
-            //TODO show crouton
+            int id =((ViewGroup)getView().getParent()).getId();
+            Crouton.makeText(getActivity(),
+                    getString(R.string.error_no_connection_available),
+                            Style.ALERT,
+                    id).show();
             return;
         }
 
         /**
          * If mContainerLayout is invisible and mSwipeRefreshLayout is not refreshing than we should call the API to receive data
          * */
-        if(mContainerLayout.getVisibility() == View.INVISIBLE && !mSwipeRefreshLayout.isRefreshing()){
+        if(mContainerLayout.getVisibility() == View.GONE && !mSwipeRefreshLayout.isRefreshing()){
             mSwipeRefreshLayout.post(new Runnable() {
                 @Override public void run() {
 
@@ -106,7 +120,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
                     }
                 }
             });
-
         }
     }
 
@@ -118,25 +131,57 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
 
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.error_retry){
+            if(mContainerLayout.getVisibility() == View.GONE && !mSwipeRefreshLayout.isRefreshing()){
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override public void run() {
+                        if(!mSwipeRefreshLayout.isRefreshing()) {
+                            mSwipeRefreshLayout.setRefreshing(true);
+                            getAndCheckLocationSettings();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+
     @DebugLog // This method will be called when a TodayWeatherModel event is posted
     public void onEvent(TodayWeatherModel todayWeatherModel) {
         mSwipeRefreshLayout.setRefreshing(false);
-        FunctionUtility.showHideViews(mContainerLayout, null);
+        FunctionUtility.showHideViews(mContainerLayout, mErrorLayout);
         loadData(todayWeatherModel);
         Toast.makeText(getActivity(), " ok ", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @DebugLog // This method will be called when a TodayWeatherModel event is posted
+    public void onEvent(NetworkChange networkChange) {
+        if(FunctionUtility.isNetworkAvailable(getActivity())){
+                int id =((ViewGroup)getView().getParent()).getId();
+                Crouton.makeText(getActivity(),
+                        getString(R.string.error_no_connection_available),
+                        Style.ALERT,
+                        id).show();
+                return;
+        }
     }
 
 
     @DebugLog // This method will be called when a ErrorResponse event is posted
     public void onEvent(ErrorResponse errorResponse) {
         mSwipeRefreshLayout.setRefreshing(false);
-        //TODO FunctionUitlity.showHideViews(mErrorLayout,null);
-        Toast.makeText(getActivity(), "not ok ", Toast.LENGTH_SHORT).show();
+        mErrorSubtitle.setText(errorResponse.getErrorResponse());
+        FunctionUtility.showHideViews(mErrorLayout,mContainerLayout);
     }
 
     @DebugLog// This method will be called when a LocationEvent event is posted
     public void onEventMainThread(LocationEvent locationEvent) {
+        ((MainActivity)getActivity()).latLongLocation = locationEvent.getLatitude()+","+locationEvent.getLongitude();
         requestDataFromServer(locationEvent);
+        EventBus.getDefault().removeStickyEvent(locationEvent);
     }
 
 
@@ -155,6 +200,11 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private void renderView(View rootView) {
         mContainerLayout = (RelativeLayout) rootView.findViewById(R.id.fragment_today_container);
+        mErrorLayout = (LinearLayout) rootView.findViewById(R.id.fragment_today_error_view);
+
+        mErrorRetry = (TextView) rootView.findViewById(R.id.error_retry);
+        mErrorRetry.setOnClickListener(this);
+        mErrorSubtitle = (TextView) rootView.findViewById(R.id.error_subtitle);
 
         mWeatherImage = (ImageView) rootView.findViewById(R.id.fragment_today_weather_image);
         mLocationText = (TextView) rootView.findViewById(R.id.fragment_today_location);
@@ -166,7 +216,7 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         mWindSpeedText = (TextView) rootView.findViewById(R.id.fragment_today_wind_speed);
         mDirectionText = (TextView) rootView.findViewById(R.id.fragment_today_direction);
 
-        mContainerLayout.setVisibility(View.INVISIBLE);
+        mContainerLayout.setVisibility(View.GONE);
     }
 
     private void requestDataFromServer(LocationEvent locationEvent){
@@ -186,7 +236,5 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         mDirectionText.setText(todayWeatherModel.getWinddir16Point());
 
     }
-
-
 
 }

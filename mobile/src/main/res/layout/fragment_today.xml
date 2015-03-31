@@ -29,16 +29,18 @@
                     android:layout_marginTop="@dimen/global_spacing_m"
                     android:src="@drawable/overlay_weather_status_today"
                     android:contentDescription="@string/fragment_today_image_description" />
-<!-- al.shkurti.weather.android.utility.Circle -->
-                <al.shkurti.weather.android.utility.CircleImageView
+
+                <al.shkurti.weather.android.view.CircleImageView
                     android:id="@+id/fragment_today_weather_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
+                    android:layout_margin="@dimen/global_spacing_xs"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
                     android:layout_alignLeft="@id/fragment_today_weather_image_bg"
                     android:layout_alignRight="@id/fragment_today_weather_image_bg"
+                    android:layout_alignStart="@id/fragment_today_weather_image_bg"
+                    android:layout_alignEnd="@id/fragment_today_weather_image_bg"
                     android:layout_alignBottom="@id/fragment_today_weather_image_bg"
                     android:layout_alignTop="@id/fragment_today_weather_image_bg"/>
 
@@ -68,11 +70,11 @@
                 <View
                     android:id="@+id/fragment_today_divider"
                     android:layout_width="@dimen/fragment_today_divider_width"
-                    android:layout_height="@dimen/fragment_today_divider_height"
+                    android:layout_height="@dimen/global_divider_height"
                     android:layout_below="@id/fragment_today_weather_condition"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/global_spacing_m"
-                    android:background="@color/fragment_today_divider" />
+                    android:background="@color/global_divider" />
 
                 <!-- Trick when icons don't have the same height, thanks Roman Guy :)-->
                 <LinearLayout
@@ -165,7 +167,7 @@
 
             <include
                 android:id="@+id/fragment_today_error_view"
-                layout="@layout/fragment_error_view" />
+                layout="@layout/error_view" />
 
         </RelativeLayout>
 
