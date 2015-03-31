@@ -63,7 +63,6 @@ dependencies {
     // com.android.support & google stuff
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.android.support:support-v4:22.0.0'
-    compile 'com.android.support:cardview-v7:22.0.0'
     compile 'com.android.support:recyclerview-v7:22.0.0'
     compile 'com.google.android.gms:play-services-location:7.0.0'// Google Location, Activity Recognition, and Places
     // communication
@@ -80,10 +79,6 @@ dependencies {
         transitive = true
     }
     compile 'com.github.johnkil.android-robototextview:robototextview:2.3.0'
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
-        //exclusion is not necessary, but generally a good idea
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
     compile 'com.afollestad:material-dialogs:0.6.7.0'
 }
 
