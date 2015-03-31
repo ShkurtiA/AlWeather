@@ -38,7 +38,7 @@ public class APICall {
 
             @Override
             public void success(TodayWeatherResponse todayWeatherResponse, Response response) {
-                if(todayWeatherResponse.getData() == null &&
+                if(todayWeatherResponse.getData() != null &&
                         todayWeatherResponse.getData().getCurrent_condition().size() >0 &&
                         todayWeatherResponse.getData().getCurrent_condition().get(0) != null){
                     EventBus.getDefault().postSticky(todayWeatherResponse.getData().getCurrent_condition().get(0));
@@ -89,7 +89,7 @@ public class APICall {
 
             @Override
             public void success(ForecastWeatherResponse forecastWeatherResponse, Response response) {
-                if(forecastWeatherResponse.getData() == null &&
+                if(forecastWeatherResponse.getData() != null &&
                         forecastWeatherResponse.getData().getWeather().size()  == AlWeatherConfig.WEATHER_FORECAST_DAYS ){
                     EventBus.getDefault().postSticky(forecastWeatherResponse.getData().getWeather());
                 }else{
