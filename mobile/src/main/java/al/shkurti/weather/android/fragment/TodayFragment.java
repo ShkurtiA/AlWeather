@@ -167,7 +167,8 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     @DebugLog // This method will be called when a ErrorResponse event is posted
     public void onEvent(ErrorResponse errorResponse) {
         mSwipeRefreshLayout.setRefreshing(false);
-        mErrorSubtitle.setText(errorResponse.getErrorResponse());
+        if(errorResponse.getErrorResponse() != null && errorResponse.getErrorResponse().length()>0)
+            mErrorSubtitle.setText(errorResponse.getErrorResponse());
         FunctionUtility.showHideViews(mErrorLayout,mContainerLayout);
     }
 
