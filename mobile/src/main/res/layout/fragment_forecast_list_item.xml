@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app_font="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="@dimen/global_spacing_xxl">
+
+    <RelativeLayout
+        android:id="@+id/imageContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingTop="@dimen/global_spacing_m"
+        android:paddingBottom="@dimen/global_spacing_m">
+
+        <ImageView
+            android:id="@+id/fragment_forecast_weather_image_bg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/global_spacing_xs"
+            android:layout_marginRight="@dimen/global_spacing_xs"
+            android:src="@drawable/overlay_weather_status_forecast" />
+
+        <al.shkurti.weather.android.view.CircleImageView
+            android:id="@+id/fragment_forecast_weather_image"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_margin="@dimen/global_spacing_xs_0"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="@+id/fragment_forecast_weather_image_bg"
+            android:layout_alignParentRight="@+id/fragment_forecast_weather_image_bg"
+            android:layout_alignParentTop="@+id/fragment_forecast_weather_image_bg"
+            android:layout_alignParentBottom="@+id/fragment_forecast_weather_image_bg"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+    </RelativeLayout>
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/fragment_forecast_item_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageContainer"
+        android:layout_marginTop="@dimen/global_spacing_xs"
+        android:layout_toRightOf="@id/imageContainer"
+        android:textColor="@color/fragment_today_text_temp"
+        android:textSize="@dimen/global_text_size_display_1"
+        app_font:typeface="roboto_light"
+        tools:text="Wednesday" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/fragment_forecast_item_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageContainer"
+        android:layout_toRightOf="@id/imageContainer"
+        android:textColor="@color/global_text_info"
+        android:layout_marginBottom="@dimen/global_spacing_xs"
+        android:textSize="@dimen/global_text_size_display_1"
+        app_font:typeface="roboto_medium"
+        tools:text="22*C" />
+
+    <com.devspark.robototextview.widget.RobotoTextView
+        android:id="@+id/fragment_forecast_item_weather_condition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/fragment_forecast_item_temp"
+        android:layout_marginBottom="@dimen/global_spacing_xxxs"
+        android:layout_marginLeft="@dimen/global_spacing_s"
+        android:layout_toRightOf="@+id/fragment_forecast_item_temp"
+        android:textSize="@dimen/global_text_size_title"
+        app_font:typeface="roboto_light"
+        tools:text="Sunny" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/global_divider_height"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/imageContainer"
+        android:background="@color/global_divider" />
+
+
+</RelativeLayout>

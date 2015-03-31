@@ -1,8 +1,35 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="Widget.AlWeather.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="maxButtonHeight">48dp</item>
+        <item name="android:paddingLeft">@dimen/toolbar_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/toolbar_horizontal_padding</item>
+        <item name="contentInsetStart">@dimen/toolbar_first_keyline</item>
+    </style>
+
+    <style name="Widget.AlWeather.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="android:paddingLeft">@dimen/toolbar_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/toolbar_horizontal_padding</item>
+    </style>
+
+    <!-- This Button is visible when text is selected -->
+    <style name="Widget.AlWeather.ActionButton.CloseMode" parent="Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:layout_marginRight">@dimen/ab_action_button</item>
+    </style>
+
+    <style name="Widget.AlWeather.Toolbar.Button.Navigation" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:minWidth">@dimen/toolbar_button_navigation</item>
+    </style>
+
+    <style name="Widget.AlWeather.ActionButton.Overflow" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+
+    <style name="TextAppearance.Example.Display4" parent="@style/TextAppearance.AppCompat.Display4">
+        <item name="android:textSize">@dimen/global_text_size_display_4</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
     </style>
 
 </resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.AlWeather" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="colorPrimary">@color/global_color_primary</item>
+        <item name="colorPrimaryDark">@color/global_color_primary_dark</item>
+        <item name="colorControlHighlight">@color/global_color_control_highlight</item>
+
+        <!-- Actionbar styles -->
+        <item name="actionBarStyle">@style/Widget.AppCompat.ActionBar.Solid</item>
+
+        <!-- Action Mode styles -->
+        <item name="actionModeStyle">@style/Widget.AlWeather.ActionMode</item>
+        <item name="actionModeBackground">@color/ab_action_mode_bg</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AlWeather.ActionButton.CloseMode</item>
+
+        <!-- Toolbar styles -->
+        <item name="toolbarStyle">@style/Widget.AlWeather.Toolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Widget.AlWeather.Toolbar.Button.Navigation</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AlWeather.ActionButton.Overflow</item>
+
+    </style>
+
+
+    <style name="Theme.AlWeather.Toolbar.Appcompat" parent="Theme.AlWeather">
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+        <item name="android:textColorSecondary">@color/toolbar_text</item>
+        <item name="colorControlHighlight">@color/toolbar_color_control_highlight</item>
+    </style>
+
+
+    <style name="Theme.AlWeather.Toolbar.Popup" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/global_menu_item_text</item>
+    </style>
+
+
+</resources>

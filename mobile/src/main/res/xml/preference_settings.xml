@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:entries="@array/entries_list_preference_unit_length"
+        android:entryValues="@array/entryvalues_list_preference_unit_length"
+        android:key="@string/preference_key_unit_length"
+        android:summary="%s"
+        android:title="@string/dialog_preference_title_unit_length" />
+
+    <ListPreference
+        android:dialogTitle="@string/dialog_preference_title_unit_temp"
+        android:entries="@array/entries_list_preference_unit_temp"
+        android:entryValues="@array/entryvalues_list_preference_unit_temp"
+        android:key="@string/preference_key_unit_temp"
+        android:summary="%s"
+        android:title="@string/dialog_preference_title_unit_temp" />
+
+</PreferenceScreen>

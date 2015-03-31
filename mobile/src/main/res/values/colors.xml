@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <color name="global_color_primary">#7fa5e3</color>
+    <color name="global_color_primary_dark">#6684b6</color>
+    <color name="global_color_accent">#4CAF50</color>
+    <color name="global_color_control_highlight">#667fa5e3</color>
+
+
+    <color name="ab_action_mode_bg">@color/global_white</color>
+
+    <color name="toolbar_text">@color/global_white</color>
+    <color name="toolbar_color_control_highlight">#66ffffff</color>
+    <color name="global_menu_item_text">#626064</color>
+
+    <!-- DRAWER COLORS; OVERWRITE THESE COLORS TO CHANGE DRAWER THEME -->
+    <color name="material_drawer_background">@color/global_white</color>
+    <color name="material_drawer_selected">@color/global_white</color>
+    <color name="material_drawer_primary_text">#7e7e7e</color> <!-- mund te jete kjo ngjyre #333333 bej kontroll -->
+    <color name="material_drawer_selected_text">#99b7e9</color>
+    <color name="material_drawer_header_selection_text">@color/global_white</color>
+    <color name="material_drawer_divider">#e7e7e7</color>
+    
+    <color name="global_text_info">#404040</color>
+    <color name="fragment_today_text_temp">#333333</color>
+    <color name="global_divider">#dedede</color>
+
+    <color name="error_view_text">#656565</color>
+    <color name="error_view_bg">#eeeeee</color>
+    <color name="error_view_text_dark">#CC000000</color>
+    <color name="error_view_text_light">#858585</color>
+    <color name="error_view_retry_button_background">#30000000</color>
+    <color name="error_view_retry_button_background_stroke">#50000000</color>
+    
+</resources>
