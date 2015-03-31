@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="entries_list_preference_unit_temp">
+        <item>Celsius (°C)</item>
+        <item>Fahrenheit (°F)</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_preference_unit_temp">
+        <item>@string/global_temperature_unit_c</item>
+        <item>@string/global_temperature_unit_f</item>
+    </string-array>
+
+    <string-array name="entries_list_preference_unit_length">
+        <item>Meters</item>
+        <item>Inch</item>
+    </string-array>
+
+    <string-array name="entryvalues_list_preference_unit_length">
+        <item>@string/global_length_unit_m</item>
+        <item>@string/global_length_unit_in</item>
+    </string-array>
+
+</resources>
