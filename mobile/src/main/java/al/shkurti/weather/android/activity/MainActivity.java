@@ -173,7 +173,6 @@ public class MainActivity extends ActionBarActivity {
 
     private void setupActionBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         // check if a fragment is shown that put his title, if no one is show put the default
         Fragment todayFragment = getSupportFragmentManager().findFragmentByTag(TodayFragment.TODAY_FRAGMENT_TAG);
@@ -185,8 +184,10 @@ public class MainActivity extends ActionBarActivity {
         if(forecastFragment != null) {
             toolbar.setTitle(getString(R.string.drawer_forecast));
             return;
+        }else {
+            toolbar.setTitle(getString(R.string.drawer_today));
         }
-        toolbar.setTitle(getString(R.string.drawer_today));
+        setSupportActionBar(toolbar);
     }
 
 
