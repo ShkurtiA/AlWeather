@@ -30,6 +30,8 @@ import hugo.weaving.DebugLog;
 
 /**
  * Created by Armando Shkurti on 2015-03-26.
+ *
+ * Fragmenti qe mban motin per sot
  */
 public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, View.OnClickListener{
 
@@ -112,6 +114,19 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mSwipeRefreshLayout!=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mSwipeRefreshLayout.destroyDrawingCache();
+            mSwipeRefreshLayout.clearAnimation();
+        }
+
+    }
+
+
     @DebugLog
     @Override// Is called when user swipes refresh layout
     public void onRefresh() {
@@ -176,7 +191,6 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.fragment_today_swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.global_color_primary);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        ((MainActivity)getActivity()).setFragmentSwipeRefreshToActivity(mSwipeRefreshLayout);
     }
 
 
@@ -231,12 +245,12 @@ public class TodayFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     private void loadData(TodayWeatherModel todayWeatherModel) {
 
-        loadImageUtil.loadBitmapToImageView(mWeatherImage,todayWeatherModel.getWeatherIconUrl().get(0).getValue());
+        loadImageUtil.loadBitmapToImageView(mWeatherImage, todayWeatherModel.getWeatherIconUrl().get(0).getValue());
 
-        mWeatherConditionText.setText(getTemperature(todayWeatherModel)+" | "+todayWeatherModel.getWeatherDesc().get(0).getValue());
-        mHumidityText.setText(todayWeatherModel.getHumidity()+getString(R.string.global_percentage));
+        mWeatherConditionText.setText(getTemperature(todayWeatherModel) + " | " + todayWeatherModel.getWeatherDesc().get(0).getValue());
+        mHumidityText.setText(getString(R.string.global_percentage,todayWeatherModel.getHumidity()));
         mPrecipitationText.setText(getPrecipitation(todayWeatherModel.getPrecipMM()));
-        mPressureText.setText(todayWeatherModel.getPressure()+ " " +getString(R.string.global_pressure_unit_pa));
+        mPressureText.setText(getString(R.string.global_pressure_unit_pa,todayWeatherModel.getPressure()));
         mWindSpeedText.setText(getWindSpeed(todayWeatherModel));
         mDirectionText.setText(todayWeatherModel.getWinddir16Point());
 

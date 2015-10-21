@@ -9,12 +9,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:background="@color/global_white">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/global_white">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:id="@+id/fragment_today_container"

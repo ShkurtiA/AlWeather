@@ -66,11 +66,13 @@ dependencies {
     compile "com.android.support:appcompat-v7:$googleVersion"
     compile "com.android.support:support-v4:$googleVersion"
     compile "com.android.support:recyclerview-v7:$googleVersion"
+    compile "com.android.support:design:$googleVersion"
+    compile "com.android.support:cardview-v7:$googleVersion"
     compile 'com.google.android.gms:play-services-location:8.1.0'// Google Location, Activity Recognition, and Places
     // communication
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     // view
     compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
         // https://github.com/keyboardsurfer/Crouton the boss says:

@@ -1,12 +1,10 @@
 package al.shkurti.weather.android.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,23 +21,19 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import al.shkurti.weather.android.R;
-import al.shkurti.weather.android.event.LocationEvent;
 import al.shkurti.weather.android.fragment.ForecastFragment;
 import al.shkurti.weather.android.fragment.TodayFragment;
-import de.greenrobot.event.EventBus;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import hugo.weaving.DebugLog;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActivity {
 
     public String latLongLocation="";
 
     private AccountHeader.Result mDrawerHeader;
     private Drawer.Result mDrawer;
     private Toolbar toolbar;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,11 +111,6 @@ public class MainActivity extends ActionBarActivity {
         } else {
             super.onBackPressed();
         }
-    }
-
-
-    public void setFragmentSwipeRefreshToActivity(SwipeRefreshLayout mSwipeRefreshLayout){
-        this.mSwipeRefreshLayout = mSwipeRefreshLayout;
     }
 
     @Override
@@ -236,18 +225,12 @@ public class MainActivity extends ActionBarActivity {
      * @param fragment Fragment that we want to show
      * */
     private void showFragment(Fragment fragment, String TAG) {
-        // because of a bug of swipe refreshlayout, that when fragment swipelayout is
-        // refreshing you cant call a commit fragment from Main UI Thread because the swipe
-        // wont let it appear, this is a workaround to fix this bug
-        if(mSwipeRefreshLayout != null && mSwipeRefreshLayout.isRefreshing()){
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.container_content, fragment,TAG);
         // Commit the transaction
         transaction.commit();
-        getSupportFragmentManager().executePendingTransactions();
     }
 
 }
